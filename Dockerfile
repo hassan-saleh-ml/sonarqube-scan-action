@@ -10,34 +10,37 @@ LABEL version="2.0.1" \
       com.github.actions.color="green"
 
 
-# Install Flutter
+# Install Android and Flutter
+
+ENV ANDROID_HOME="/usr/local/Android"
+ENV ANDROID_SDK_ROOT="$ANDROID_HOME/sdk"
+ENV PATH="${PATH}:${ANDROID_HOME}/cmdline-tools/latest/bin:${ANDROID_HOME}/platform-tools"
 
 # Prerequisites
-RUN apk update && apk add curl git unzip xz zip mesa-gl openjdk11 wget
+RUN apk update && apk add curl git unzip xz zip mesa-gl openjdk11-jdk wget gcompat
+RUN rm /var/cache/apk/*
+RUN mkdir -p ${ANDROID_HOME}/cmdline-tools /root/.android
 
-# Set up new user
-RUN useradd -ms /bin/bash developer
-USER developer
-WORKDIR /home/developer
-
-# Prepare Android directories and system variables
-RUN mkdir -p Android/sdk
-ENV ANDROID_SDK_ROOT /home/developer/Android/sdk
-RUN mkdir -p .android && touch .android/repositories.cfg
-
-# Set up Android SDK
-RUN wget -O sdk-tools.zip https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip
-RUN unzip sdk-tools.zip && rm sdk-tools.zip
-RUN mv tools Android/sdk/tools
-RUN cd Android/sdk/tools/bin && yes | ./sdkmanager --licenses
-RUN cd Android/sdk/tools/bin && ./sdkmanager "build-tools;29.0.2" "patcher;v4" "platform-tools" "platforms;android-29" "sources;android-29"
-ENV PATH "$PATH:/home/developer/Android/sdk/platform-tools"
+# Install the Android SDK Dependency.
+RUN set -eux; wget -q https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip -O /tmp/android-sdk-tools.zip
+RUN unzip -q /tmp/android-sdk-tools.zip -d /tmp/
+RUN mv /tmp/cmdline-tools ${ANDROID_HOME}/cmdline-tools/latest/
+RUN rm -rf /tmp/cmdline-tools
+RUN touch /root/.android/repositories.cfg
+RUN yes | sdkmanager --sdk_root=${ANDROID_HOME} --licenses
+RUN sdkmanager --sdk_root=${ANDROID_HOME} --install "platform-tools"
+RUN sdkmanager --sdk_root=${ANDROID_HOME} --install "platforms;android-31" "platforms;android-32" "build-tools;29.0.2"
 
 # Download Flutter SDK
-RUN git clone https://github.com/flutter/flutter.git
-ENV PATH "$PATH:/home/developer/flutter/bin"
+RUN git clone https://github.com/flutter/flutter.git /usr/local/flutter
+ENV PATH "$PATH:/usr/local/flutter/bin"
 
-# Run basic check to download Dark SDK
+# Run basic check to download Dart SDK
+RUN flutter config --android-sdk=${ANDROID_SDK_ROOT}
+RUN yes "y" | flutter doctor --android-licenses
+RUN dart --disable-analytics
+RUN flutter config --no-analytics --enable-android
+RUN flutter precache --universal --android
 RUN flutter doctor
 
 
