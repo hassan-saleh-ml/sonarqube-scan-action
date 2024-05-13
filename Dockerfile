@@ -13,7 +13,7 @@ LABEL version="2.0.1" \
 # Install Flutter
 
 # Prerequisites
-RUN apt update && apt install -y curl git unzip xz-utils zip libglu1-mesa openjdk-8-jdk wget
+RUN apk update && apk add curl git unzip xz-utils zip libglu1-mesa openjdk-8-jdk wget
 
 # Set up new user
 RUN useradd -ms /bin/bash developer
