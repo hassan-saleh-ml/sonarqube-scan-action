@@ -37,7 +37,7 @@ jobs:
         id: build-image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: custom-flutter-sonar-scanner
+          ECR_REPOSITORY: flutter-sonar-scanner
           IMAGE_TAG: ${{ github.sha }}
         working-directory: ./flutter-scanner
         run: |

@@ -1,4 +1,4 @@
-FROM 116370539244.dkr.ecr.eu-west-1.amazonaws.com/custom-flutter-sonar-scanner:latest
+FROM 116370539244.dkr.ecr.eu-west-1.amazonaws.com/flutter-sonar-scanner:latest
 
 LABEL version="2.0.1" \
       repository="https://github.com/hassan-saleh-ml/sonarqube-scan-action" \
