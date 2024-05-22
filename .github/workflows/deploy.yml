@@ -39,7 +39,6 @@ jobs:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: custom-flutter-sonar-scanner
           IMAGE_TAG: ${{ github.sha }}
-        working-directory: ./flutter-scanner
         run: |
           docker build -f Dockerfile --tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG --tag $ECR_REGISTRY/$ECR_REPOSITORY:latest .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
