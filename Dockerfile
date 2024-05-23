@@ -1,10 +1,12 @@
-FROM sonarsource/sonar-scanner-cli:5.0.1
+FROM sonarsource/sonar-scanner-cli:latest
 
 # Install Android and Flutter
 
 ENV ANDROID_HOME="/usr/local/Android"
 ENV ANDROID_SDK_ROOT="$ANDROID_HOME/sdk"
 ENV PATH="${PATH}:${ANDROID_HOME}/cmdline-tools/latest/bin:${ANDROID_HOME}/platform-tools"
+
+USER root
 
 # Prerequisites
 RUN apk update && apk add curl git unzip xz zip mesa-gl openjdk11-jdk wget gcompat
@@ -42,7 +44,8 @@ LABEL version="2.0.1" \
       com.github.actions.color="green"
 
 COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+RUN chmod 754 /entrypoint.sh
 COPY cleanup.sh /cleanup.sh
-RUN chmod +x /cleanup.sh
+RUN chmod 754 /cleanup.sh
+
 ENTRYPOINT ["/entrypoint.sh"]
