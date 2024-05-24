@@ -44,8 +44,7 @@ LABEL version="2.0.1" \
       com.github.actions.color="green"
 
 COPY entrypoint.sh /entrypoint.sh
-RUN chmod 754 /entrypoint.sh
 COPY cleanup.sh /cleanup.sh
-RUN chmod 754 /cleanup.sh
+COPY convert_oss_result.dart /usr/local/convert_oss_result.dart
 
 ENTRYPOINT ["/entrypoint.sh"]
