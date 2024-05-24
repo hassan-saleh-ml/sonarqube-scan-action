@@ -40,6 +40,11 @@ if [[ -f "${INPUT_PROJECTBASEDIR}/pubspec.yaml" ]]; then
   cd $INPUT_PROJECTBASEDIR; flutter pub get
 fi
 
+if [[ -n "${PARSE_ORT_ADVISOR_RESULT}" ]]; then
+  dart run convert_oss_result.dart
+  # TODO: convert to SonarQube issues format
+fi
+
 unset JAVA_HOME
 
 cd $INPUT_PROJECTBASEDIR; sonar-scanner ${INPUT_ARGS}

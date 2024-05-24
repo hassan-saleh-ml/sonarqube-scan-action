@@ -10,7 +10,7 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
-      timezone: "CET"
+      timezone: "Europe/Prague"
     open-pull-requests-limit: 100
     commit-message:
       prefix: "NO-JIRA "
