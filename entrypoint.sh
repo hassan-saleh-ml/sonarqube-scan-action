@@ -41,7 +41,7 @@ if [[ -f "${INPUT_PROJECTBASEDIR}/pubspec.yaml" ]]; then
 fi
 
 if [[ -n "${PARSE_ORT_ADVISOR_RESULT}" ]]; then
-  dart run convert_oss_result.dart
+  cd $INPUT_PROJECTBASEDIR; dart run convert_oss_result.dart
   # TODO: convert to SonarQube issues format
 fi
 
