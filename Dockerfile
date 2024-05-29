@@ -11,7 +11,11 @@ USER 0
 # Prerequisites
 RUN apk update && apk add curl git unzip xz zip mesa-gl wget gcompat
 RUN rm /var/cache/apk/*
+RUN mkdir -p /usr/local/flutter; \
+    chown -R scanner-cli:scanner-cli /usr/local/flutter
 # RUN mkdir -p ${ANDROID_HOME}/cmdline-tools /root/.android
+
+USER scanner-cli
 
 # Install the Android SDK Dependency.
 # RUN set -eux; wget -q https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip -O /tmp/android-sdk-tools.zip
@@ -26,6 +30,7 @@ RUN rm /var/cache/apk/*
 # Download Flutter SDK
 RUN git clone https://github.com/flutter/flutter.git /usr/local/flutter
 ENV PATH "$PATH:/usr/local/flutter/bin"
+RUN git config --global --add safe.directory /usr/local/flutter
 
 # Run basic check to download Dart SDK
 # RUN flutter config --android-sdk=${ANDROID_SDK_ROOT}
@@ -42,6 +47,8 @@ LABEL version="2.0.1" \
       com.github.actions.description="Scan your Flutter code with SonarQube to detect Bugs, Vulnerabilities and Code Smells!" \
       com.github.actions.icon="check" \
       com.github.actions.color="green"
+
+USER 0
 
 COPY entrypoint.sh /entrypoint.sh
 COPY cleanup.sh /cleanup.sh
