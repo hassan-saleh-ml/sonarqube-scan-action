@@ -47,5 +47,7 @@ fi
 
 unset JAVA_HOME
 
+git config --global --add safe.directory /usr/local/flutter
+
 cd $INPUT_PROJECTBASEDIR; sonar-scanner ${INPUT_ARGS}
 
