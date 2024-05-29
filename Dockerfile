@@ -13,6 +13,7 @@ RUN apk update && apk add curl git unzip xz zip mesa-gl wget gcompat
 RUN rm /var/cache/apk/*
 RUN mkdir -p /usr/local/flutter; \
     chown -R scanner-cli:scanner-cli /usr/local/flutter
+RUN git config --global --add safe.directory /usr/local/flutter
 # RUN mkdir -p ${ANDROID_HOME}/cmdline-tools /root/.android
 
 USER scanner-cli
@@ -30,7 +31,6 @@ USER scanner-cli
 # Download Flutter SDK
 RUN git clone https://github.com/flutter/flutter.git /usr/local/flutter
 ENV PATH "$PATH:/usr/local/flutter/bin"
-RUN git config --global --add safe.directory /usr/local/flutter
 
 # Run basic check to download Dart SDK
 # RUN flutter config --android-sdk=${ANDROID_SDK_ROOT}
