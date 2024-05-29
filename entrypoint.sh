@@ -40,11 +40,10 @@ if [[ -f "${INPUT_PROJECTBASEDIR}/pubspec.yaml" ]]; then
   cd $INPUT_PROJECTBASEDIR; flutter pub get
 fi
 
-if [[ -n "${PARSE_ORT_ADVISOR_RESULT}" ]]; then
-  cp /usr/local/convert_oss_result.dart $INPUT_PROJECTBASEDIR/convert_oss_result.dart
-  cd $INPUT_PROJECTBASEDIR; dart run convert_oss_result.dart
-  # TODO: convert to SonarQube issues format
-fi
+# if [[ -n "${PARSE_ORT_ADVISOR_RESULT}" ]]; then
+#   cp /usr/local/convert_oss_result.dart $INPUT_PROJECTBASEDIR/convert_oss_result.dart
+#   cd $INPUT_PROJECTBASEDIR; dart run convert_oss_result.dart
+# fi
 
 unset JAVA_HOME
 
