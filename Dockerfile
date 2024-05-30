@@ -12,9 +12,12 @@ USER 0
 RUN apk update && apk add curl git unzip xz zip mesa-gl wget gcompat
 RUN rm /var/cache/apk/*
 RUN mkdir -p /usr/local/flutter; \
+    usermod -a -G scanner-cli $USER;
     chown -R scanner-cli:scanner-cli /usr/local/flutter
 RUN git config --global --add safe.directory /usr/local/flutter
 # RUN mkdir -p ${ANDROID_HOME}/cmdline-tools /root/.android
+
+USER scanner-cli
 
 # Install the Android SDK Dependency.
 # RUN set -eux; wget -q https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip -O /tmp/android-sdk-tools.zip
@@ -46,6 +49,7 @@ LABEL version="2.0.1" \
       com.github.actions.icon="check" \
       com.github.actions.color="green"
 
+USER 0
 
 COPY entrypoint.sh /entrypoint.sh
 COPY cleanup.sh /cleanup.sh
