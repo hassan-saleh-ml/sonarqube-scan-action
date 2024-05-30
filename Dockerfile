@@ -12,7 +12,7 @@ USER 0
 RUN apk update && apk add curl git unzip xz zip mesa-gl wget gcompat
 RUN rm /var/cache/apk/*
 RUN mkdir -p /usr/local/flutter; \
-    usermod -a -G scanner-cli $USER;
+    usermod -a -G scanner-cli $USER; \
     chown -R scanner-cli:scanner-cli /usr/local/flutter
 RUN git config --global --add safe.directory /usr/local/flutter
 # RUN mkdir -p ${ANDROID_HOME}/cmdline-tools /root/.android
