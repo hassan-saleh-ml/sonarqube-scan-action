@@ -16,8 +16,6 @@ RUN mkdir -p /usr/local/flutter; \
 RUN git config --global --add safe.directory /usr/local/flutter
 # RUN mkdir -p ${ANDROID_HOME}/cmdline-tools /root/.android
 
-USER scanner-cli
-
 # Install the Android SDK Dependency.
 # RUN set -eux; wget -q https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip -O /tmp/android-sdk-tools.zip
 # RUN unzip -q /tmp/android-sdk-tools.zip -d /tmp/
@@ -48,7 +46,6 @@ LABEL version="2.0.1" \
       com.github.actions.icon="check" \
       com.github.actions.color="green"
 
-USER 0
 
 COPY entrypoint.sh /entrypoint.sh
 COPY cleanup.sh /cleanup.sh
